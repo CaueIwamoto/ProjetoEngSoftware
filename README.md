@@ -1,71 +1,77 @@
-# Projeto de Engenharia de Software
-## Projeto de Engenharia de Software, realizado na FEI - 2º semestre 2025
+🚗 SOS Auto - Projeto de Engenharia de Software
 
----
+FEI - 2º semestre de 2025
 
-### 15/08/2025 - Definição de Projeto e Formação de grupo
+📌 Problema ou Necessidade
+Problema
 
-## Descrição do projeto:
-1. Problema ou necessidade que o produto busca resolver
+Quando o carro quebra ou apresenta defeito na rua, o motorista geralmente não sabe a quem recorrer rapidamente. Muitas vezes depende de contatos antigos, da assistência 24h do seguro (que pode demorar), ou precisa pesquisar oficinas manualmente. Isso gera:
 
-Problema: Quando o carro quebra ou apresenta defeito na rua, o motorista geralmente não sabe a quem recorrer rapidamente. Muitas vezes depende de contatos antigos, assistência 24h do seguro (que pode demorar) ou precisa pesquisar oficinas manualmente. Isso gera perda de tempo, insegurança e custos imprevisíveis.
+Perda de tempo
 
-Necessidade: Ter acesso rápido e confiável a profissionais qualificados para resolver problemas mecânicos e de socorro, onde quer que o motorista esteja.
+Insegurança
 
+Custos imprevisíveis
 
----
+Necessidade
 
-2. Quem serão os usuários finais do produto?
+Oferecer acesso rápido e confiável a profissionais qualificados para resolver problemas mecânicos e de socorro, onde quer que o motorista esteja.
 
-Usuários finais:
+👥 Usuários Finais
 
-Motoristas comuns (carros particulares, motos, utilitários)
+Motoristas de carros particulares, motos e utilitários
 
 Empresas com frotas (táxis, aplicativos, locadoras)
 
 Motociclistas de delivery e transporte
 
+Justificativa
 
-Justificativa: Todos esses grupos dependem de seus veículos para locomoção ou trabalho. Quando há pane, precisam de uma solução rápida e transparente para voltar à ativa.
+Todos esses grupos dependem de seus veículos para locomoção ou trabalho. Quando há pane, precisam de uma solução rápida, segura e transparente para voltar à ativa.
 
-Objetivo: Reduzir o tempo e o estresse do processo de encontrar socorro mecânico, aumentando a confiança e previsibilidade nos custos.
+🎯 Objetivo do Produto
 
+Reduzir o tempo e o estresse do processo de encontrar socorro mecânico, aumentando a confiança e a previsibilidade nos custos.
 
+⚙️ Funcionalidades Mínimas (MVP)
 
----
-
-3. Funcionalidades mínimas (MVP)
-
-Cadastro de motoristas e mecânicos/guincheiros
+Cadastro de motoristas e profissionais (mecânicos, guincheiros)
 
 Geolocalização para encontrar o profissional mais próximo
 
-Solicitação de serviço em tempo real (guincho, troca de bateria, pneu, diagnóstico básico)
+Solicitação de serviços em tempo real:
+
+Guincho
+
+Troca de bateria
+
+Troca de pneu
+
+Diagnóstico básico
 
 Estimativa de preço e tempo de chegada antes da confirmação
 
-Chat ou ligação dentro do app para detalhes rápidos
+Comunicação via chat ou ligação pelo app
 
-Avaliação e feedback pós-serviço
+Avaliação e feedback dos serviços prestados
 
-Pagamento integrado (cartão, Pix)
+Pagamento integrado (cartão de crédito e Pix)
 
+🚀 Diferenciais do Produto
 
+Velocidade: Chamado instantâneo com base em geolocalização. Sem necessidade de ligar para centrais ou depender de seguros.
 
----
+Transparência: Orçamento e tempo estimado informados antes da confirmação do serviço.
 
-4. Diferencial do produto em relação a concorrentes ou soluções alternativas
+Variedade de Serviços: Desde reparos simples no local até reboque para oficina.
 
-Velocidade: Chamado instantâneo via geolocalização, sem precisar ligar para centrais ou depender de seguro.
+Confiabilidade: Profissionais avaliados com nota pública e comentários.
 
-Transparência: Orçamento prévio e tempo estimado antes de aceitar.
+Flexibilidade: Serviço disponível para qualquer usuário, mesmo sem contrato de assistência ou seguro.
 
-Variedade de serviços: Desde reparos simples no local até reboque para oficina.
+📚 Sobre o Projeto
 
-Profissionais avaliados: Nota pública e comentários de clientes anteriores para confiança.
-
-Flexibilidade: Usuário pode chamar o serviço mesmo sem ter contrato de assistência ou seguro.
-
+Este projeto foi desenvolvido como parte da disciplina de Engenharia de Software, durante o 2º semestre de 2025, na FEI. O objetivo é aplicar os conceitos de análise, design, arquitetura e desenvolvimento de software em um produto com impacto social e prático.
 
 ## Integrantes do grupo
 - Cauê Iwamoto Meira, R.A: 22.221.039-5
