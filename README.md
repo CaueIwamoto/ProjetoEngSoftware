@@ -5,7 +5,7 @@
 
 ## FEI - 2º semestre de 2025
 
-### 15/08/2025:
+### 15/08/2025
 
 ## 📌 Problema ou Necessidade:
 ### Problema:
