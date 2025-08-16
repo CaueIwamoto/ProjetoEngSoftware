@@ -1,4 +1,7 @@
-# 🚗 SOS Auto - Projeto de Engenharia de Software
+# 🚗 SOS Auto - Pronto Atendimento Para Serviços Automotivos 
+<p align="center">
+<img width="512" height="512" alt="42853c15-ae20-4bbd-b57c-87c51ff189d0" src="https://github.com/user-attachments/assets/e8ab534a-8209-4ada-bbcf-b3bbdfca285b" />
+</p>
 
 ## FEI - 2º semestre de 2025
 
@@ -26,17 +29,18 @@ Todos esses grupos dependem de seus veículos para locomoção ou trabalho. Quan
 Reduzir o tempo e o estresse do processo de encontrar socorro mecânico, aumentando a confiança e a previsibilidade nos custos.
 
 ### ⚙️ Funcionalidades Mínimas (MVP):
-- Cadastro de motoristas e profissionais (mecânicos, guincheiros);
+- Cadastro de motoristas e profissionais (mecânicos, guincheiros, borracheiro);
 - Geolocalização para encontrar o profissional mais próximo;
 - Solicitação de serviços em tempo real;
 - Guincho;
 - Troca de bateria;
 - Troca de pneu;
 - Diagnóstico básico;
+- Acionamento do Seguro;
 - Estimativa de preço e tempo de chegada antes da confirmação;
 - Comunicação via chat ou ligação pelo app;
 - Avaliação e feedback dos serviços prestados;
-- Pagamento integrado (cartão de crédito e Pix).
+- Pagamento integrado (cartão de crédito, débito e Pix).
 
 ### 🚀 Diferenciais do Produto:
 - Velocidade: Chamado instantâneo com base em geolocalização. Sem necessidade de ligar para centrais ou depender de seguros;
