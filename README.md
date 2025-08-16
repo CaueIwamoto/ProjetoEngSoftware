@@ -1,11 +1,16 @@
 # Projeto de Engenharia de Software
-Projeto de Engenharia de Software, realizado na FEI - 2º semestre 2025
+## Projeto de Engenharia de Software, realizado na FEI - 2º semestre 2025
+
+---
+
+### 15/08/2025 - Definição de Projeto e Formação de grupo
+
+## Descrição do projeto:
 1. Problema ou necessidade que o produto busca resolver
 
 Problema: Quando o carro quebra ou apresenta defeito na rua, o motorista geralmente não sabe a quem recorrer rapidamente. Muitas vezes depende de contatos antigos, assistência 24h do seguro (que pode demorar) ou precisa pesquisar oficinas manualmente. Isso gera perda de tempo, insegurança e custos imprevisíveis.
 
 Necessidade: Ter acesso rápido e confiável a profissionais qualificados para resolver problemas mecânicos e de socorro, onde quer que o motorista esteja.
-
 
 
 ---
@@ -60,3 +65,10 @@ Variedade de serviços: Desde reparos simples no local até reboque para oficina
 Profissionais avaliados: Nota pública e comentários de clientes anteriores para confiança.
 
 Flexibilidade: Usuário pode chamar o serviço mesmo sem ter contrato de assistência ou seguro.
+
+
+## Integrantes do grupo
+- Cauê Iwamoto Meira, R.A: 22.221.039-5
+- David Gabriel de Souza Batista, R.A: 22.123.056-8
+- Eduardo Gonçalves Moreira, R.A: 22.124.087-2
+- Haniel Franco, R.A: 22.125.071-5
