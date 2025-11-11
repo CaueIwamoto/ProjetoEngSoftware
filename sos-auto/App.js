@@ -10,55 +10,64 @@ const Abas = createBottomTabNavigator();
 const Pilha = createStackNavigator();
 const Stack = createStackNavigator();
 
-import Servico from "./components/HomePaginas/Servico";
-import Pagamento from "./components/HomePaginas/Pagamento";
-import Home from './components/HomePaginas/Home'
+import Servico from "./components/Cliente/HomeStackCliente/Servico";
+import Pagamento from "./components/Cliente/HomeStackCliente/Pagamento";
+import Home from './components/Cliente/HomeStackCliente/Home'
 
-import Buscar from './components/Buscar'
-import Chat from './components/Chat'
-import Perfil from './components/Perfil'
+import Buscar from './components/Cliente/Buscar'
+import Chat from './components/Cliente/Chat'
+import Perfil from './components/Cliente/Perfil'
+
+//Telas Prestador
+import HomePrestador from "./components/Prestador/Home"
+import Avaliacoes from "./components/Prestador/Avaliacoes"
+import PerfilPrestador from "./components/Prestador/Perfil"
+import ChatPrestador from "./components/Prestador/Chat"
 
 
-function HomeStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Mapa" component={Home} />
-      <Stack.Screen name="Servico" component={Servico} />
-      <Stack.Screen name="Pagamento" component={Pagamento} />
-    </Stack.Navigator>
-  );
-}
 
 // --- Tela de Login ---
 class Login extends React.Component {
   state = { usuario: '', senha: '' };
 
   logar = () => {
-    const email = this.state.usuario.toLowerCase();
-    const password = this.state.senha.toLowerCase();
+     const email = this.state.usuario.toLowerCase(); 
+     const password = this.state.senha.toLowerCase(); 
+     firebase.auth() .signInWithEmailAndPassword(email, password) 
+     .then((userCredential) => { 
+       const user = userCredential.user; 
+       const uid = user.uid; 
+       Alert.alert("Logado!", "Login realizado com sucesso!"); 
+       firebase.database().ref(`usuarios/${uid}`).once("value")
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            console.log("Tipo:", userData.tipo); // cliente ou prestador
 
-    firebase.auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;  
-        const uid = user.uid;
-        Alert.alert("Logado!", "Login realizado com sucesso!");
-        this.props.navigation.replace("AppTabs", { uid, email });
-      })
-      .catch(error => {
-        const errorCode = error.code;
-
-        if (errorCode === "auth/invalid-email") {
-          Alert.alert("Formato do email inválido");
-        } else if (errorCode === "auth/user-not-found") {
-          Alert.alert("Usuário não encontrado");
-        } else if (errorCode === "auth/wrong-password") {
-          Alert.alert("Senha incorreta");
-        } else {
-          Alert.alert("Erro: " + error.message);
-        }
-      });
+            if (userData.tipo === "cliente") {
+              this.props.navigation.replace("AppTabsCliente", { uid, email });
+            } else {
+              this.props.navigation.replace("AppTabsPrestador", { uid, email });
+            }
+          } else {
+            Alert.alert("Usuário não encontrado no banco.");
+          }
+        })
+        .catch(err => {
+          console.log("Erro ao buscar dados:", err);
+        });
+       }) 
+       .catch(error => { 
+         const errorCode = error.code; 
+         if (errorCode === "auth/invalid-email") { Alert.alert("Formato do email inválido"); } 
+         else if (errorCode === "auth/user-not-found") { Alert.alert("Usuário não encontrado"); } 
+         else if (errorCode === "auth/wrong-password") { Alert.alert("Senha incorreta"); } 
+         else { Alert.alert("Erro: " + error.message); } 
+        }); 
+  
   };
+
+
 
   render() {
     return (
@@ -108,7 +117,23 @@ class Login extends React.Component {
 
 // --- Tela de Cadastro ---
 class Cadastro extends React.Component {
-  state = { user: '', password: '', tipo: 'cliente' };
+  state = { 
+    tipo: 'cliente',
+    user: '',
+    password: '',
+    nome: '',
+    sobrenome: '',
+    cpf: '',
+    celular: '',
+    razaoSocial: '',
+    cnpj: '',
+    servicos: '',
+    cidade: '',
+    bairro: '',
+    rua: '',
+    numero: '',
+    cep: '',
+  };
 
   gravar = () => {
     const email = this.state.user.toLowerCase();
@@ -138,6 +163,13 @@ class Cadastro extends React.Component {
           servicos: this.state.servicos,
           celular: this.state.celular,
           email: email,
+          endereco: {
+            cidade: this.state.cidade,
+            bairro: this.state.bairro,
+            rua: this.state.rua,
+            numero: this.state.numero,
+            cep: this.state.cep,
+          },
           
         });
       }
@@ -390,7 +422,16 @@ class Cadastro extends React.Component {
 }
 
 // --- Abas do App Final ---
-function AppTabs({ route }) {
+function HomeStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Mapa" component={Home} />
+      <Stack.Screen name="Servico" component={Servico} />
+      <Stack.Screen name="Pagamento" component={Pagamento} />
+    </Stack.Navigator>
+  );
+}
+function AppTabsCliente({ route }) {
   const { uid, email } = route.params;
   return (
     <Abas.Navigator
@@ -414,6 +455,32 @@ function AppTabs({ route }) {
   );
 }
 
+
+function AppTabsPrestador({ route }) {
+  const { uid, email } = route.params;
+  return (
+    <Abas.Navigator 
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let icone;
+          if (route.name === 'Home') icone = 'home';
+          else if (route.name === 'Avaliações') icone = 'star-outline';
+          else if (route.name === 'Chat') icone = 'chat-processing';
+          else if (route.name === 'Perfil') icone = 'account';
+          return <MaterialCommunityIcons name={icone} color={color} size={size} />;
+        },
+        headerShown: false,
+      })}
+    >
+      <Abas.Screen name="Home" component={HomePrestador} initialParams={{ uid, email }} />
+      <Abas.Screen name="Avaliações" component={Avaliacoes} initialParams={{ uid, email }} />
+      <Abas.Screen name="Chat" component={ChatPrestador} initialParams={{ uid, email }} />
+      <Abas.Screen name="Perfil" component={PerfilPrestador} initialParams={{ uid, email }} />
+    </Abas.Navigator>
+  );
+}
+
+
 // --- App principal com Pilha ---
 export default class App extends React.Component {
   render() {
@@ -422,7 +489,8 @@ export default class App extends React.Component {
         <Pilha.Navigator screenOptions={{ headerShown: false }}>
           <Pilha.Screen name="Login" component={Login} />
           <Pilha.Screen name="Cadastro" component={Cadastro} />
-          <Pilha.Screen name="AppTabs" component={AppTabs} />
+          <Pilha.Screen name="AppTabsCliente" component={AppTabsCliente} />
+          <Pilha.Screen name="AppTabsPrestador" component={AppTabsPrestador} />
         </Pilha.Navigator>
       </NavigationContainer>
     );
