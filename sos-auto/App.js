@@ -10,6 +10,7 @@ const Abas = createBottomTabNavigator();
 const Pilha = createStackNavigator();
 const Stack = createStackNavigator();
 
+import Finalizado from './components/Cliente/HomeStackCliente/Finalizado'
 import Servico from "./components/Cliente/HomeStackCliente/Servico";
 import Pagamento from "./components/Cliente/HomeStackCliente/Pagamento";
 import Home from './components/Cliente/HomeStackCliente/Home'
@@ -135,50 +136,88 @@ class Cadastro extends React.Component {
     cep: '',
   };
 
+  validarCPF(cpf) {
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+    return true;
+  }
+
+  validarCNPJ(cnpj) {
+    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) return false;
+    return true
+  }
+
+
   gravar = () => {
     const email = this.state.user.toLowerCase();
     const password = this.state.password.toLowerCase();
+    const tipo = this.state.tipo;
 
-    firebase.auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const userId = userCredential.user.uid;
+    // --- validação do CELULAR ---
+    const celularLimpo = this.state.celular.replace(/\D/g, ""); 
+    if (celularLimpo.length !== 11) {
+      Alert.alert("Erro", "O celular deve ter DDD + 9 dígitos (total 11 números).");
+      return;
+    }
 
-      if (this.state.tipo === 'cliente') {
-        // se for cliente
-        firebase.database().ref('usuarios/' + userId).set({
-          tipo: 'cliente',
-          nome: this.state.nome,
-          sobrenome: this.state.sobrenome,
-          cpf: this.state.cpf,
-          celular: this.state.celular,
-          email: email,
-        });
-      } else {
-        // se for prestador
-        firebase.database().ref('usuarios/' + userId).set({
-          tipo: 'prestador',
-          razaoSocial: this.state.razaoSocial,
-          cnpj: this.state.cnpj,
-          servicos: this.state.servicos,
-          celular: this.state.celular,
-          email: email,
-          endereco: {
-            cidade: this.state.cidade,
-            bairro: this.state.bairro,
-            rua: this.state.rua,
-            numero: this.state.numero,
-            cep: this.state.cep,
-          },
-          
-        });
+    // --- validação do CPF (cliente) ---
+    if (tipo === "cliente") {
+      const cpf = this.state.cpf.replace(/\D/g, "");
+      if (!this.validarCPF(cpf)) {
+        Alert.alert("Erro", "CPF inválido.");
+        return;
       }
+    }
 
-      Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-      this.props.navigation.goBack();
-    })
-      .catch(error => Alert.alert('Erro', error.message));
+    // --- validação do CNPJ (prestador) ---
+    if (tipo === "prestador") {
+      const cnpj = this.state.cnpj.replace(/\D/g, "");
+      if (!this.validarCNPJ(cnpj)) {
+        Alert.alert("Erro", "CNPJ inválido.");
+        return;
+      }
+    }
+
+    // Criar usuário no Firebase
+    firebase.auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const userId = userCredential.user.uid;
+
+        if (tipo === 'cliente') {
+          firebase.database().ref('usuarios/' + userId).set({
+            tipo: 'cliente',
+            nome: this.state.nome,
+            sobrenome: this.state.sobrenome,
+            cpf: this.state.cpf,
+            celular: this.state.celular,
+            email: email,
+          });
+        } else {
+          firebase.database().ref('usuarios/' + userId).set({
+            tipo: 'prestador',
+            razaoSocial: this.state.razaoSocial,
+            cnpj: this.state.cnpj,
+            servicos: this.state.servicos,
+            celular: this.state.celular,
+            email: email,
+            endereco: {
+              cidade: this.state.cidade,
+              bairro: this.state.bairro,
+              rua: this.state.rua,
+              numero: this.state.numero,
+              cep: this.state.cep,
+            },
+          });
+        }
+
+        Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
+        this.props.navigation.goBack();
+      })
+      .catch(error => {
+        Alert.alert("Erro", error.message);
+      });
   };
+
 
   
   render() {
@@ -304,7 +343,7 @@ class Cadastro extends React.Component {
 
             <Text style={estilos.textoCadastro}>Tipos de Serviço:</Text>
             <TextInput 
-              placeholder="Guincho, Borracheiro, Mecânico, etc..."
+              placeholder="Guincho, Borracheiro, Mecânico ou Pneu"
               placeholderTextColor="#999"
               style={estilos.input} 
               onChangeText={texto => this.setState({ servicos: texto })} 
@@ -315,6 +354,8 @@ class Cadastro extends React.Component {
               placeholder="XX.XXX.XXX/XXXX.XX"
               placeholderTextColor="#999"
               style={estilos.input} 
+              keyboardType="numeric"
+              maxLength={14} 
               onChangeText={texto => this.setState({ cnpj: texto })} 
             />
 
@@ -331,6 +372,8 @@ class Cadastro extends React.Component {
               placeholder="(DDD) XXXX-XXXX"
               placeholderTextColor="#999"
               style={estilos.input} 
+              keyboardType="numeric"
+              maxLength={11} 
               onChangeText={texto => this.setState({ celular: texto })} 
             />
 
@@ -340,14 +383,6 @@ class Cadastro extends React.Component {
               placeholderTextColor="#999"
               style={estilos.input} 
               secureTextEntry onChangeText={texto => this.setState({ password: texto})}
-            />
-
-            <Text style={estilos.textoCadastro}>Numero Celular:</Text>
-            <TextInput 
-              placeholder="(DDD) XXXX-XXXX"
-              placeholderTextColor="#999"
-              style={estilos.input} 
-              onChangeText={texto => this.setState({ celular: texto })} 
             />
 
             <Text style={estilos.texto}>Endereço</Text>
@@ -380,6 +415,8 @@ class Cadastro extends React.Component {
               placeholder="XXX"
               placeholderTextColor="#999"
               style={estilos.input} 
+              keyboardType="numeric"
+              maxLength={5} 
               onChangeText={texto => this.setState({ numero: texto })} 
             />
 
@@ -388,6 +425,8 @@ class Cadastro extends React.Component {
               placeholder="XXXXX-XXX"
               placeholderTextColor="#999"
               style={estilos.input} 
+              keyboardType="numeric"
+              maxLength={9} 
               onChangeText={texto => this.setState({ cep: texto })} 
             />
 
@@ -428,6 +467,7 @@ function HomeStack() {
       <Stack.Screen name="Mapa" component={Home} />
       <Stack.Screen name="Servico" component={Servico} />
       <Stack.Screen name="Pagamento" component={Pagamento} />
+      <Stack.Screen name="Finalizado" component={Finalizado} />
     </Stack.Navigator>
   );
 }

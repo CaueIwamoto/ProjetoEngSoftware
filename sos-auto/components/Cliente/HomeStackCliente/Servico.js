@@ -64,7 +64,7 @@ export default function EscolherServico() {
           {
             text: "OK",
             onPress: () => {
-              navigation.navigate("Home", { screen: "Pagamento" });
+            navigation.navigate("Pagamento", { servico, prestador: escolhido });
             },
           },
         ]

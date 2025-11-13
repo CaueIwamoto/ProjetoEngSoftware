@@ -3,13 +3,6 @@ import { StyleSheet, Text, View, Button, ScrollView, TouchableOpacity } from 're
 import firebase from '../../config/config';
 
 class Chat extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      lista: []
-    };
-  }
-
   render() {
     return (
       <View style={estilos.tela}>
